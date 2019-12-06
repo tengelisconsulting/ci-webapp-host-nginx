@@ -56,6 +56,11 @@ http {
             try_files \$uri \$uri/ @staticindex;
         }
 
+        location /dev {
+          root   /usr/share/nginx/html;
+          proxy_pass http://127.0.0.1:${BUILD_MGR_PORT};
+        }
+
         location @staticindex {
             add_header Cache-Control no-cache;
             expires 0;
