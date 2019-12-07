@@ -5,6 +5,16 @@ if [ "${NGINX_PORT}" = "" ]; then
     exit 1
 fi
 
+if [ "${BUILD_MGR_PORT}" = "" ]; then
+    echo "ERR - Supply BUILD_MGR_PORT"
+    exit 1
+fi
+
+if [ "${BUILD_MGR_HOST}" = "" ]; then
+    echo "ERR - Supply BUILD_MGR_HOST"
+    exit 1
+fi
+
 cat << EOF
 user  nginx;
 worker_processes  1;
@@ -58,7 +68,7 @@ http {
 
         location /dev {
           root   /usr/share/nginx/html;
-          proxy_pass http://127.0.0.1:${BUILD_MGR_PORT};
+          proxy_pass http://${BUILD_MGR_HOST}:${BUILD_MGR_PORT};
         }
 
         location @staticindex {
